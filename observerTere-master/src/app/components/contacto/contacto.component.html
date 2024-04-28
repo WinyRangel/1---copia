@@ -1,0 +1,74 @@
+
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Contacto</li>
+  </ol>
+</nav>
+<div class="container text-center">
+      <div class="col shadow p-3 mb-5 bg-body-tertiary rounded">
+        <h5>Contactanos</h5>
+        <!--FORMULARIO INICIO-->
+        <form class="mt-3" [formGroup]="contactoForm" (ngSubmit)="enviarCorreo()">
+        <div class="row">
+          <div class="col">
+            <input type="text" formControlName="nombre" class="form-control" placeholder="Nombre">
+            <div class="text-danger" *ngIf="contactoForm.get('nombre')?.hasError('required') && contactoForm.get('nombre')?.touched">
+              <span>Este campo es obligatorio</span>
+          </div>
+          </div>
+
+          <div class="col">
+            <input type="text" formControlName="correo" class="form-control" placeholder="Correo Electrónico">
+            <div class="text-danger" *ngIf="contactoForm.get('correo')?.hasError('required') && contactoForm.get('correo')?.touched">
+              <span>Este campo es obligatorio</span>
+          </div>
+          </div>
+
+        </div>
+        <br>
+        <select class="form-select" formControlName="asunto" aria-label="Default select example" aria-placeholder="Selecciona el asunto">
+          <option selected>Tema</option>
+          <option value="1">Bolsa de trabajo</option>
+          <option value="2">Dudas o comentarios</option>
+          <option value="3">Otros</option>
+        </select>
+        <div class="text-danger" *ngIf="contactoForm.get('asunto')?.hasError('required') && contactoForm.get('asunto')?.touched">
+          <span>Por favor selecciona el tema</span>
+      </div>
+        <br>
+        <div class="mb-3">
+          <textarea class="form-control" formControlName="descripcion" id="exampleFormControlTextarea1" rows="3" placeholder="Descripción" aria-label="Descripción"></textarea>
+        </div>
+        <!--FORMULARIO FIN-->
+        <button type="submit" class="btn btn-outline-primary">Enviar</button>
+      </form>                    
+      </div>
+  </div>
+
+ <!--
+ <div class="contenedor-redes-sociales">
+        <a class="facebook" href="https://www.facebook.com/profile.php?id=61556696798193" target="_blank">
+            <span class="circulo"><i class="fa fa-facebook"></i></span>
+            <span class="titulo">Facebook</span>
+            <span class="titulo-hover">Seguir</span>
+        </a>
+
+        <a class="facebook" href="https://www.facebook.com/profile.php?id=61556696798193" target="_blank">
+          <span class="circulo"><i class="fa fa-facebook"></i></span>
+          <span class="titulo">Facebook</span>
+          <span class="titulo-hover">Seguir</span>
+      </a>
+    
+       <a class="twitter" href="https://twitter.com/ACTUNITY24" target="_blank">
+           <span class="circulo"><i class="fa fa-twitter"></i></span>
+           <span class="titulo">Twitter</span>
+           <span class="titulo-hover">Seguir</span>
+       </a>
+    
+       <a class="gplus" href="https://www.tiktok.com/@actunity24" target="_blank">
+           <span class="circulo"><i class="fa fa-google-plus"></i></span>
+           <span class="titulo">Tiktok</span>
+           <span class="titulo-hover">Seguir</span>
+       </a>
+    </div>
+    --->

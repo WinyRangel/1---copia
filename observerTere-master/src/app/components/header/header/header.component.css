@@ -1,0 +1,90 @@
+/* Estilo para el header */
+header.navbar {
+  padding: 1rem;
+  background-color: var(--bs-light);
+  border-bottom: 1px solid var(--bs-gray);
+}
+
+/* Estilo para el contenedor del logo */
+.logo-container {
+  margin-right: 1rem;
+}
+
+.logo-container img {
+  display: block;
+  width: 150px; /* Ajusta el tamaño del logo según tus necesidades */
+  height: auto; /* Mantén la proporción de aspecto del logo */
+}
+
+/* Estilo para la navegación */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espacio entre elementos */
+}
+
+.nav-link {
+  color: var(--bs-dark);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  border-radius: 5px; /* Bordes redondeados para un estilo más suave */
+}
+
+.nav-link:hover {
+  color: var(--bs-primary);
+  background-color: var(--bs-light-blue); /* Color de fondo para el hover */
+}
+
+.nav-link.active {
+  color: var(--bs-primary);
+  font-weight: bold;
+  background-color: var(--bs-light-blue); /* Color de fondo para el enlace activo */
+}
+
+/* Estilo para el botón de modo oscuro */
+.btn {
+  background-color: transparent;
+  border: none;
+  margin-left: auto;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn:hover {
+  color: var(--bs-primary);
+}
+
+.btn i {
+  font-size: 1.2rem; /* Ajusta el tamaño del icono según tus necesidades */
+}
+
+/* Estilo para el dropdown */
+.dropdown {
+  position: relative;
+}
+
+.dropdown img {
+  border-radius: 50%; /* Redondear la imagen del avatar */
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  background-color: var(--bs-light);
+  border-radius: 5px;
+  margin-top: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Sombra para el menú */
+}
+
+.dropdown-item {
+  padding: 0.5rem 1rem;
+  color: var(--bs-dark);
+  transition: background-color 0.3s ease-in-out;
+}
+
+.dropdown-item:hover {
+  background-color: var(--bs-light-blue);
+  color: var(--bs-primary);
+}

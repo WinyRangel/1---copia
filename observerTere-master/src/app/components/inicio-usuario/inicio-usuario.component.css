@@ -1,0 +1,29 @@
+.btn:hover {
+  text-shadow: 1px 1px 6px #fff;
+  transform: scale(1.1); /* Escala 10% más grande al pasar el cursor */
+  font-size: 1em;
+  transition: all 0.2s ease;
+  color: white;
+}
+
+.btn:hover #ibtn {
+  transition: all 0.2s ease;
+  transform: scale(1.2);
+}
+
+.btn-info {
+  background-color: #81c9fa;
+}
+
+.btn-light {
+  background-color: #2196f3;
+}
+
+.btn-dark {
+  background-color: #1465bb;
+}
+
+.button-icon {
+  font-size: 50px;
+  padding: 10px;
+}

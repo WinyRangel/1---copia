@@ -1,0 +1,28 @@
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/Inicio">Inicio</a></li>
+      <li class="breadcrumb-item"><a href="/listar-recurso">Almacén</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Tipo de recurso</li>
+    </ol>
+  </nav>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <form (ngSubmit)="registrarTipo()">
+                        <div class="form-group">
+                            <div>
+                                <label for="nombre">Nombre:</label>
+                                <input type="text" id="nombre" class="form-control" formControlName="nombre" name="nombre" [(ngModel)]="nuevoTipo.nombre" required>
+                              </div>
+                        </div>  
+                        <br>
+                        <button type="submit" class="btn btn-success">Registrar Tipo de Recurso</button>
+                      </form> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

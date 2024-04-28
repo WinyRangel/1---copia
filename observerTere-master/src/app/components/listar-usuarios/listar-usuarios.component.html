@@ -1,0 +1,45 @@
+<h2>Lista de Usuarios</h2>
+
+<div class="container-fluid mt-5"> <!-- Changed class to container-fluid for responsiveness -->
+    <div class="row">
+      <div class="col-md-10 offset-md-1"> <!-- Adjusted column width and added offset -->
+        <div class="card">
+          <div class="card-body text-center">
+            <span style="color: black; font-weight: bold" class="titulo">LISTADO DE EMPLEADOS</span>
+            <div class="d-flex justify-content-end mb-3">
+              <button class="btn btn-success me-2" routerLink="/registro"><i class="fa-solid fa-plus"></i> NUEVO</button>
+              <div class="form-group mb-0">
+                <input type="text" class="form-control" name="filterEmpleado" placeholder="Buscar Empleado">
+              </div>
+            </div>
+            <div class="table-responsive"> <!-- Added class to make table responsive -->
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Apellidos</th>
+                    <th scope="col">RFC</th>
+                    <th scope="col">Correo Electrónico</th>
+                    <th scope="col">Empresa</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let usuario of usuarios">
+                    <td>{{usuario.nombre}}</td>
+                    <td>{{usuario.apellido}}</td>
+                    <td>{{usuario.rfc}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.nomEmpresa}}</td>
+                    <td>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <h5 style="text-align: start; margin-top: 10px;" *ngIf="usuarios.length == 0"> No hay empleados para mostrar</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

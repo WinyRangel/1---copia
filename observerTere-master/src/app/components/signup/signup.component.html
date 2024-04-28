@@ -1,0 +1,115 @@
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/unity">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Registro</li>
+  </ol>
+</nav>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-6">
+        <div class="card mx-auto shadow-lg rounded"> <!-- Añadida la clase shadow-lg y rounded para un efecto de sombra y esquinas redondeadas -->
+          <div class="card-body">
+            <h2 class="card-title text-center mb-4">Registrarme</h2>
+            <hr class="my-4">
+                <form [formGroup]="usuarioForm" (ngSubmit)="registrarUsuario()">
+                  <!---Información personal-->
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre completo">
+                      <div class="invalid-feedback" *ngIf="formularioEnviado && usuarioForm.get('nombre')?.invalid">
+                        El nombre es requerido.
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="apellido" placeholder="Apellidos">
+                      <div class="invalid-feedback" *ngIf="formularioEnviado && usuarioForm.get('apellido')?.invalid">
+                        El apellido es requerido.
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="rfc" placeholder="RFC">
+                      <div class="invalid-feedback" *ngIf="formularioEnviado && usuarioForm.get('rfc')?.invalid">
+                        El rfc es requerido.
+                      </div>
+                    </div>
+
+                    <div class="mb-3">
+                      <label for="marca">Empresa</label>
+                      <select class="form-select" formControlName="nomEmpresa" aria-label="Default select example" aria-placeholder="Selecciona la empresa">
+                          <option selected disabled>Selecciona la empresa</option>
+                          <option *ngFor="let empresa of empresas" [value]="empresa.nomEmpresa">{{ empresa.nomEmpresa }}</option>
+                        </select>
+                      <div class="text-danger" *ngIf="usuarioForm.get('nomEmpresa')?.hasError('required') && usuarioForm.get('nomEmpresa')?.touched">
+                          <span>Por favor selecciona <strong>EL DEPARTAMENTO DE INGRESO</strong> del empleado</span>
+                      </div>
+                  </div>
+                    <!--Info de usuario-->
+
+                    <div class="form-group">
+                      <input type="email" class="form-control" formControlName="email" placeholder="Correo electrónico">
+                      <div class="text-danger" *ngIf="usuarioForm.get('email')?.hasError('required') && usuarioForm.get('email')?.touched">
+                        <span>El <strong>CORREO ELECTRÓNICO</strong> es obligatorio</span>
+                      </div>
+                      <div class="text-danger" *ngIf="usuarioForm.get('email')?.hasError('email') && usuarioForm.get('email')?.touched">
+                        <span>El correo electrónico debe ser válido.</span>
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <input type="text" class="form-control" formControlName="username" placeholder="Nombre de usuario">
+                      <div class="text-danger" *ngIf="usuarioForm.get('username')?.hasError('minlength') && usuarioForm.get('username')?.touched">
+                        El nombre de usuario debe tener al menos 6 caracteres.
+                      </div>
+                    </div>
+                  
+           
+                  
+                    <div class="form-group">
+                      <div class="input-group">           
+                        <input [type]="passwordVisible ? 'text' : 'password'" id="password" class="form-control" formControlName="password" placeholder="Contraseña">
+                        <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility()">
+                          <i [class]="passwordVisible ? '' : 'fa-solid fa-eye'"></i> <!-- Cambiado el ícono del ojo -->
+                        </button>
+                      </div>
+                        <div class="text-danger" *ngIf="usuarioForm.get('password')?.hasError('required') && usuarioForm.get('password')?.touched">
+                        La contraseña es requerida.
+                      </div>
+                      <div class="text-danger" *ngIf="usuarioForm.get('password')?.hasError('minlength') && usuarioForm.get('password')?.touched">
+                        La contraseña debe tener al menos 6 caracteres.
+                      </div>
+                      <div class="text-danger" *ngIf="usuarioForm.get('password')?.hasError('invalidPassword') && usuarioForm.get('password')?.touched">
+                        La contraseña debe contener al menos una mayúscula, una minúscula, un número y un carácter especial.
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <div class="input-group">           
+                      <input type="password" class="form-control" formControlName="confirmPassword" placeholder="Confirmar Contraseña">
+                      <button class="btn btn-outline-secondary" type="button" (click)="togglePasswordVisibility1()">
+                        <i [class]="passwordVisible1 ? 'fa-solid fa-eye-slash' : 'fa-solid fa-eye'"></i> <!-- Cambiado el ícono del ojo -->
+                      </button>
+                    </div>
+                      <div class="text-danger" *ngIf="usuarioForm.get('confirmPassword')?.hasError('required') && usuarioForm.get('confirmPassword')?.touched">
+                        La confirmación de contraseña es requerida.
+                      </div>
+                      <div class="text-danger" *ngIf="usuarioForm.hasError('passwordsNotMatching') && usuarioForm.get('confirmPassword')?.touched">
+                        Las contraseñas no coinciden.
+                      </div>
+                    </div>
+                    <re-captcha
+                  formControlName="recaptchaToken"
+                  siteKey="6LeedbwpAAAAAB93tMbJDh309vU0lfWIXKJ8s3rY"
+                  (resolved)="onCaptchaResolved($event)">
+                </re-captcha>
+                    <button type="submit"class="btn btn-primary btn-block" style="margin-bottom: 12px; text-align: center;">Registrar</button>
+                    <p><i class="fa-solid fa-arrow-left" style="color: #0091ff;"></i> <a class="link-opacity-10-hover" href="/signin">  Iniciar sesion  </a></p>  
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+      

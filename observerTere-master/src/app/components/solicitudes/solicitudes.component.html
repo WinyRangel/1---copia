@@ -1,0 +1,139 @@
+<div id="seccion_header" style="text-align: center;">
+  <h2>Solicitudes de asignación</h2>
+  <hr>
+</div>
+<div id="cont" class="container mt-5">
+  <div class="row">
+    <div class="col-md-9">
+      <div class="card">
+        <div class="card-body text-center">
+          <span style="color: black; font-weight: bold" class="titulo">LISTADO DE SOLICITUDES EN PROCESO</span>
+          <!--
+          <div class="d-flex justify-content-end mb-3">
+            <div class="form-group mb-0">
+              <input type="text" class="form-control" name="filterEmpleado" placeholder="Buscar Empleado">
+            </div>
+          </div>
+          -->
+                  <!--inicio nav -->
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true"  (click)="mostrarDiv('Pendientes')">Solicitudes pendientes</button>
+            <button class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false" (click)="mostrarDiv('Aprobadas')">solicitudes aprobadas</button>
+            <button class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false" (click)="mostrarDiv('Rechazadas')">Solicitudes rechazada</button>
+          </div>
+        </nav>
+      <!--fin nav-->
+      <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab" tabindex="0">
+          <!--tabla solicitudes pendientes-->
+          <div *ngIf="mostrarPendientes" id="Pendientes" class="table-responsive">
+              <table class="table table-striped">
+                  <thead>
+                      <tr>
+                          <th scope="col">Empleado</th>
+                          <th scope="col">Articulo solicitado</th>
+                          <th scope="col">Número de serie</th>
+                          <th scope="col">Comentarios</th>
+                          <th scope="col">Fecha de entrega</th>
+                          <th scope="col">Acciones</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr *ngFor="let solicitud of solicitudes">
+                          <ng-container *ngIf="(solicitud.estado == 'Pendiente')">
+                              <td>{{ solicitud.nombre }}</td>
+                              <td>{{ solicitud.recurso }}</td>
+                              <td>{{ solicitud.numSerie }}</td>
+                              <td>{{ solicitud.comentario }}</td>
+                              <td>
+                                  <!-- Vincula el input de fecha con la propiedad fechaEntrega de la solicitud -->
+                                  <input type="date" id="fechaEntrega_{{ solicitud._id }}" name="fechaEntrega" [(ngModel)]="solicitud.fechaEntrega" (change)="actualizarFechaEntrega(solicitud)" />
+                              </td>
+                              <td>
+                                  <div class="btn-group">
+                                      <!-- Pasa la solicitud como argumento a la función aprobarSolicitud -->
+                                      <button class="btn btn-success" (click)="aprobarSolicitud(solicitud)">
+                                          <i class="fa-solid fa-check"></i>
+                                      </button>
+                                      <button class="btn btn-danger" (click)="rechazarSolicitud(solicitud)">
+                                          <i class="fa-solid fa-times"></i>
+                                      </button>
+                                  </div>
+                              </td>
+                          </ng-container>
+                      </tr>
+                  </tbody>
+              </table>
+              <h5 style="text-align: start; margin-top: 10px;" *ngIf="solicitudes.length == 0"> No hay solicitudes pendientes en este momento</h5>
+          </div>
+      </div>
+      
+        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab" tabindex="0">
+           <!--aprobadas-->
+           <div *ngIf="mostrarAprobadas" id="Aprobadas" class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Empleado</th>
+                  <th scope="col">Articulo solicitado</th>
+                  <th scope="col">Fecha de entrega</th>
+                  <th scope="col">Comentarios</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let solicitud of solicitudes">
+                  <ng-container *ngIf="(solicitud.estado == 'Aprobada')">
+                  <td>{{ solicitud.nombre }}</td>
+                  <td>{{ solicitud.recurso }}</td>
+                  <td>{{ solicitud.fechaEntrega }}</td>
+                  <td>{{ solicitud.comentario }}</td>
+                </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          <h5 style="text-align: start; margin-top: 10px;" *ngIf="solicitudes.length == 0"> No hay solicitudes pendientes en este momento</h5>
+        </div>
+
+        </div>
+        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab" tabindex="0">
+          <!--rechazadas-->
+        <div *ngIf="mostrarRechazadas" id="Rechazadas" class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Empleado</th>
+                <th scope="col">Articulo solicitado</th>
+                <th scope="col">Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let solicitud of solicitudes">
+                <ng-container *ngIf="(solicitud.estado == 'Rechazada')">
+                <td>{{ solicitud.nombre }}</td>
+                <td>{{ solicitud.recurso }}</td>
+                <td>{{ solicitud.comentario }}</td>
+              </ng-container>
+              </tr>
+            </tbody>
+          </table>
+        <h5 style="text-align: start; margin-top: 10px;" *ngIf="solicitudes.length == 0"> No hay solicitudes pendientes en este momento</h5>
+      </div>
+
+        </div>
+      </div>
+        <!--fin-->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  function showContent(id) {
+    const contents = document.getElementsByClassName("content");
+    for (let i = 0; i < contents.length; i++) {
+      contents[i].style.display = "none";
+    }
+    document.getElementById(id).style.display = "block";
+  }
+</script>

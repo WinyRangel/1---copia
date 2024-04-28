@@ -1,0 +1,61 @@
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/inicio">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Empleados</li>
+  </ol>
+</nav>
+<div id="seccion_header" style="text-align: center;">
+  <h2>Gestión de Empleados</h2>
+  <hr>
+</div>
+<div class="container-fluid mt-5"> <!-- Changed class to container-fluid for responsiveness -->
+  <div class="row">
+    <div class="col-md-10 offset-md-1"> <!-- Adjusted column width and added offset -->
+      <div class="card">
+        <div class="card-body text-center">
+          <span style="color: black; font-weight: bold" class="titulo">LISTADO DE EMPLEADOS</span>
+          <div class="d-flex justify-content-end mb-3">
+            <button class="btn btn-success me-2" routerLink="/registro"><i class="fa-solid fa-plus"></i> NUEVO</button>
+            <div class="form-group mb-0">
+              <input type="text" class="form-control" name="filterEmpleado" placeholder="Buscar Empleado" [(ngModel)]="filterEmpleado" >
+            </div>
+          </div>
+          <div class="table-responsive"> <!-- Added class to make table responsive -->
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Nombre</th>
+                  <th scope="col">Apellidos</th>
+                  <th scope="col">Teléfono</th>
+                  <th scope="col">Correo Electrónico</th>
+                  <th scope="col">Departamento</th>
+                  <th scope="col">Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let empleado of listEmpleados | empleadofilter: filterEmpleado">
+                  <td>{{empleado.nombre}}</td>
+                  <td>{{empleado.aPaterno}} {{empleado.aMaterno}}</td>
+                  <td>{{empleado.telefono}}</td>
+                  <td>{{empleado.email}}</td>
+                  <td>{{empleado.departamento}}</td>
+                  <td>
+                    <div class="btn-group">
+                      <a [routerLink]="['/editar-empleado', empleado._id]" class="btn btn-success">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                      </a>
+                      <button (click)="eliminarEmpleado(empleado._id)" class="btn btn-danger">
+                        <i class="fa-solid fa-trash"></i>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h5 style="text-align: start; margin-top: 10px;" *ngIf="listEmpleados.length == 0"> No hay empleados para mostrar</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

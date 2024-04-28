@@ -1,0 +1,91 @@
+
+<ul class="nav nav-pills flex-column mb-auto " *ngIf="!estaAutenticado()" style="text-align: left;">
+  <app-search></app-search>
+  <hr>
+  <li>
+    <a [class.active]="isActive('/unity')" href="/unity" class="nav-link link-dark">
+      <i class="fa-solid fa-house-user"></i>      Inicio
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/contacto')" href="/contacto" class="nav-link link-dark">
+      <i class="fa-solid fa-address-card"></i>
+      Contacto
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/conocenos')" href="/conocenos" class="nav-link link-dark">
+      <i class="fa-solid fa-handshake"></i>
+      Conocenos
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/signin')" href="/signin" class="nav-link link-dark">
+      <i class="fa-solid fa-user-shield"></i>      Ingresar
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/signup')" href="/signup" class="nav-link link-dark">
+      <i class="fa-solid fa-user-plus"></i>      Registro
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/registrar-empresa')" href="/registrar-empresa" class="nav-link link-dark">
+      <i class="fa-solid fa-building-user"></i>      Registrar empresa
+    </a>
+  </li>
+</ul>
+
+<ul class="nav nav-pills flex-column" *ngIf="estaAutenticado() && rolUsuario == 'administrador'" style="text-align: left;">
+  <app-search></app-search>
+  <hr>
+  <li class="nav-item">
+    <a [class.active]="isActive('/inicio')" href="/inicio" class="nav-link active" aria-current="page">
+<i class="fa-solid fa-house"></i>
+      Inicio
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/productos')" href="/productos" class="nav-link link-dark">
+      <i class="fa-solid fa-boxes-stacked"></i>
+      Productos
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/proveedores')" href="/proveedores" class="nav-link link-dark">
+      <i class="fa-solid fa-gears"></i>
+      Proveedores
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/contacto')" href="/contacto" class="nav-link link-dark">
+      <i class="fa-solid fa-address-card"></i>
+      Contacto
+    </a>
+  </li>
+</ul>
+
+
+<!--header usuario normal-->
+<ul class="nav nav-pills flex-column" *ngIf="estaAutenticado() && rolUsuario !== 'administrador'" style="text-align: left;">
+  <app-search></app-search>
+  <hr>
+  <li class="nav-item">
+    <a [class.active]="isActive('/inicio')" href="/inicio-usuario" class="nav-link active" aria-current="page">
+      <i class="fa-solid fa-house" style="color: #0d6efd;"></i>
+      Inicio
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/productos')" href="/productos" class="nav-link link-dark">
+      <i class="fa-solid fa-cart-plus" style="color: #0d6efd;"></i>      
+      Productos
+    </a>
+  </li>
+  <li>
+    <a [class.active]="isActive('/contacto')" href="/contacto" class="nav-link link-dark">
+      <i class="fa-solid fa-address-card" style="color: #0d6efd;"></i>
+      Contacto
+    </a>
+  </li>
+</ul>

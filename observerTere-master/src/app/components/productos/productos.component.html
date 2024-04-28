@@ -1,0 +1,108 @@
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a href="/unity">Inicio</a></li>
+    <li class="breadcrumb-item active" aria-current="page">Ver recursos</li>
+  </ol>
+</nav>
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <input type="text" class="form-control" name="filterPost" placeholder="Buscar..." [(ngModel)]="filterPost">
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped mt-3">
+          <thead>
+            <tr> 
+              <th scope="col">Numero de serie</th>
+              <th scope="col">Articulo</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Ubicación</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let recurso of listRecursos" (click)="seleccionarRecurso(recurso)"  [hidden]="recurso.estado !== 'En almácen'">
+              <td>{{ recurso.numSerie }}</td>
+              <td>{{ recurso.recurso }}</td>
+              <td>{{ recurso.marca }}</td>
+              <td>{{ recurso.estado }}</td>
+              <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  <i class="fa-solid fa-list-check"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="alert alert-secondary" role="alert">
+        Te recordamos que solo es posible solicitar un recurso por solicitud, en caso de que requieras algo más por favor vuelve a llenar la solicitud
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Solicitar</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="solicitudForm" (ngSubmit)="solicitarRecurso()">
+          <label for="empleado" class="form-label">Credencial de empleado</label>
+          <select formControlName="nombre" class="form-select" aria-label="Default select example">
+            <option selected disabled>Seleccione su credencial de empleado</option>
+            <option *ngFor="let empleado of empleados" [value]="empleado.nombre">{{ empleado.nombre }}</option>
+          </select>
+
+          <div class="mb-3">
+            <label for="descripcion" class="form-label">Escribe la razón por la cual solicitas el producto</label>
+            <textarea formControlName="comentario" class="form-control" id="descripcion" aria-describedby="emailHelp"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn-success me-2">Enviar solicitud</button>
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
+
+
+      <!---
+      <div class="table-responsive">
+        <table class="table table-striped mt-3">
+          <thead>
+            <tr>
+              <th scope="col">Numero de serie</th>
+              <th scope="col">Articulo</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Estatus</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let recurso of listRecursos" (click)="seleccionarRecurso(recurso)" [hidden]="recurso.estatus === ''">
+              <td>{{ recurso.numSerie }}</td>
+              <td>{{ recurso.recurso }}</td>
+              <td>{{ recurso.marca }}</td>
+              <td>{{ recurso.estatus }}</td>
+              <td>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                  <i class="fa-solid fa-list-check"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+-->
