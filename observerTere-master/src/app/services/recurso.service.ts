@@ -75,8 +75,9 @@ export class RecursoService {
   }
 
   rechazarSolicitud(solicitudId: string, comentarioRechazo: string): Observable<any> {
-    return this.http.put(`${this.url}/${solicitudId}/rechazar`, { comentarioRechazo });
+    return this.http.put(this.url + solicitudId + '/rechazar', { comentarioRechazo });
   }
+  
   
   editarRecursoNumSerie(numSerie: string, vrecurso: Recurso): Observable<any> {
     return this.http.put(`${this.url}numserie/${numSerie}`, vrecurso);

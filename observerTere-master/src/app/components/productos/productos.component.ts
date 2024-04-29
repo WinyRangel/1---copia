@@ -23,6 +23,7 @@ export class ProductosComponent {
   id: string | null;
   filter: string = '';
   empleadoNombre: string = ''; 
+  empresaNombre: string = ''; 
 
   constructor(private fb: FormBuilder,private _recursoService: RecursoService, private toastr: ToastrService, private aRouter:ActivatedRoute, private router: Router, private sessionService: SessionService,
     private _authService: AuthService
@@ -31,7 +32,7 @@ export class ProductosComponent {
     this.solicitudForm = this.fb.group ({
       nombre: ['', ],
       recurso: ['', Validators.required],
-      comentario: ['', Validators.required],
+      comentariosolicitud: ['', Validators.required],
       numSerie: ['', Validators.required],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')
@@ -45,10 +46,12 @@ export class ProductosComponent {
     const userData = this._authService.obtenerDatosUser();
     if (userData) {
       this.empleadoNombre = userData.nombre;
+      this.empresaNombre = userData.nomEmpresa;
     }
 
     this._authService.obtenerDatosUser(); 
   }
+
 
   loadEmpleados() {
     this._authService.getUsuarios().subscribe(
@@ -98,13 +101,13 @@ export class ProductosComponent {
 
   solicitarRecurso(){
     const SOLICITUD: Solicitud = {
-      nombre: this.solicitudForm.get('nombre')?.value,
+      nombre: this.empleadoNombre,
       recurso: this.solicitudForm.get('recurso')?.value,
       estado: 'En revisión', // Estado inicial
       comentariosolicitud: this.solicitudForm.get('comentariosolicitud')?.value,
       numSerie: this.solicitudForm.get('numSerie')?.value,
       comentarioRechazo: this.solicitudForm.get('comentarioRechazo')?.value,
-      nomEmpresa: this.solicitudForm.get('empresa')?.value,
+      nomEmpresa: this.empresaNombre,
       marca: this.solicitudForm.get('marca')?.value,
       posesion: this.solicitudForm.get('posesion')?.value,
     }

@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class SolicitarRecursoService {
 
-  private apiUrl = 'https://servidor-unity-1.onrender.com/api/solicitudes';
+  private apiUrl = 'http://localhost:4000/solicitudes';
 
   constructor( private http: HttpClient) { }
 

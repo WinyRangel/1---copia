@@ -124,7 +124,7 @@ exports.solicitarRecurso = async (req, res) => {
             estado: "Pendiente",
             posesion,
             comentarios,
-            nomEmpresa
+            nomEmpresa,
         });
 
         // Guardar la solicitud en la base de datos
@@ -227,12 +227,18 @@ exports.obtenerSolicitudes = async (req, res) => {
   exports.rechazarSolicitud = async (req, res) => {
     try {
       const solicitudId = req.params.id; // 
+      const { comentarioRechazo } = req.body;
+
       const solicitud = await Solicitud.findById(solicitudId); 
   
       if (!solicitud) {
         return res.status(404).json({ message: 'Solicitud no encontrada' });
       }
         solicitud.estado = 'Rechazada';
+
+        // Actualizar el campo 'comentarioRechazo' de la solicitud
+        solicitud.comentarioRechazo = comentarioRechazo;
+
       await solicitud.save();
   
       return res.status(200).json({ message: 'Solicitud rechazada exitosamente' });
@@ -268,6 +274,30 @@ exports.obtenerSolicitudes = async (req, res) => {
           res.status(500).send('Error')
       }
   }
+
+  exports.editarSolicitud = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { comentarioRechazo } = req.body;
+
+        let solicitud = await Solicitud.findById(id);
+
+        if (!solicitud) {
+            return res.status(404).json({ message: 'Solicitud no encontrada' });
+        }
+
+        // Actualizar el campo 'comentarioRechazo' de la solicitud
+        solicitud.comentarioRechazo = comentarioRechazo;
+
+        // Guardar los cambios
+        solicitud = await solicitud.save();
+
+        res.status(200).json(solicitud);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Error interno del servidor' });
+    }
+};
 
 
 

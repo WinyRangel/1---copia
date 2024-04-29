@@ -1,10 +1,9 @@
 const Recurso = require("../models/Recurso.js");
 const { transporter } = require('../nodemailer.js'); // Ajusta la ruta según tu estructura de carpetas
-const Empleado = require("../models/Empleado.js"); // Ajusta la ruta según tu estructura de carpetas
 const Solicitud = require("../models/Solicitud.js"); // Ajusta la ruta según tu estructura de carpetas
 exports.solicitarRecurso = async (req, res) => {
   try {
-      const { idUsuario,idRecurso, posesion, comentariosolicitud, comentarioRechazo, nomEmpresa,  nombre, recurso, marca, comentario, estado } = req.body;
+      const { idUsuario,idRecurso, posesion, comentariosolicitud, comentarioRechazo, nomEmpresa,  nombre, recurso, marca, estado } = req.body;
 
       // Crear una nueva solicitud con el estado "En revisión"
       const nuevaSolicitud = new Solicitud({
@@ -18,7 +17,6 @@ exports.solicitarRecurso = async (req, res) => {
           nombre,
           recurso,
           marca,
-          comentario,
           estado: "En revisión"
       });
 

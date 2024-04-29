@@ -56,11 +56,13 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="solicitudForm" (ngSubmit)="solicitarRecurso()">
-          <label for="empleado" class="form-label">Nombre del empleado</label>
-          <input type="text" class="form-control" name="nombre" [value]="empleadoNombre" disabled>
+          <div class="mb-3">
+            <label for="nombreUsuario" class="form-label">Nombre de Usuario</label>
+            <input type="text" id="nombreUsuario" class="form-control"  [value]="empleadoNombre" readonly>
+          </div>
           <div class="mb-3">
             <label for="descripcion" class="form-label">Escribe la razón por la cual solicitas el producto</label>
-            <textarea formControlName="comentario" class="form-control" id="descripcion" aria-describedby="emailHelp"></textarea>
+            <textarea formControlName="comentariosolicitud" class="form-control" id="descripcion" aria-describedby="emailHelp"></textarea>
           </div>
 
           <button type="submit" class="btn btn-success me-2">Enviar solicitud</button>
