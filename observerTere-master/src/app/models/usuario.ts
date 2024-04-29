@@ -2,7 +2,7 @@ export class Usuario {
     _id?: number;
     nombre: string;
     apellido: string;
-    telefono: string;
+    //telefono: string;
     email: string;
     nomEmpresa: string;
     rfc: string;
@@ -18,7 +18,7 @@ export class Usuario {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
-        this.telefono = telefono;
+        //this.telefono = telefono;
         this.nomEmpresa = nomEmpresa;
         this.rfc = rfc;
         this.username = username;

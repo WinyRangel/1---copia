@@ -15,6 +15,9 @@ const RecursoSchema = mongoose.Schema({
     idUsuario:{
         type: String,
     },
+    idRecurso:{
+        type: String,
+    },
     recurso: {
         type: String,
     },

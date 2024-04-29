@@ -15,19 +15,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="marca">Apellidos</label>
-                            <input type="text" formControlName="aPaterno" class="form-control" placeholder="Apellido Paterno">
-                            <div class="text-danger" *ngIf="usuarioForm.get('apellidos')?.hasError('required') && usuarioForm.get('apellidos')?.touched">
+                            <input type="text" formControlName="apellido" class="form-control" placeholder="Apellidos">
+                            <div class="text-danger" *ngIf="usuarioForm.get('apellido')?.hasError('required') && usuarioForm.get('apellido')?.touched">
                                 <span>El Apellido  <strong>ES OBLIGATORIO</strong></span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="marca">Número de Teléfono</label>
-                            <input type="text" formControlName="telefono" class="form-control" placeholder="Ingresar número de Teléfono" inputmode="numeric" pattern="[0-9]*">
-                            <div class="text-danger" *ngIf="usuarioForm.get('telefono')?.hasError('required') && usuarioForm.get('telefono')?.touched">
-                                <span>Ingresar <strong>NÚMERO DE TELÉFONO</strong> del empleado</span>
-                            </div>
-                            <div class="text-danger" *ngIf="usuarioForm.get('telefono')?.hasError('pattern')">
-                                <span>El número de teléfono debe contener solo números</span>
                             </div>
                         </div>
                         <div class="mb-3">
@@ -35,6 +25,34 @@
                             <input type="email" formControlName="email" class="form-control" placeholder="Correo Electrónico">
                             <div class="text-danger" *ngIf="usuarioForm.get('email')?.hasError('required') && usuarioForm.get('email')?.touched">
                                 <span>Ingresar  <strong>CORREO ELECTRÓNICO</strong> del empleado</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marca">Nombre Empresa</label>
+                            <input type="text" formControlName="nomEmpresa" class="form-control" placeholder="nomEmpresa">
+                            <div class="text-danger" *ngIf="usuarioForm.get('nomEmpresa')?.hasError('required') && usuarioForm.get('nomEmpresa')?.touched">
+                                <span>El nombre del empleado <strong>ES OBLIGATORIO</strong></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marca">RFC</label>
+                            <input type="text" formControlName="rfc" class="form-control" placeholder="rfc">
+                            <div class="text-danger" *ngIf="usuarioForm.get('rfc')?.hasError('required') && usuarioForm.get('rfc')?.touched">
+                                <span>El nombre del empleado <strong>ES OBLIGATORIO</strong></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marca">uSER NAME</label>
+                            <input type="text" formControlName="username" class="form-control" placeholder="username">
+                            <div class="text-danger" *ngIf="usuarioForm.get('username')?.hasError('required') && usuarioForm.get('username')?.touched">
+                                <span>El nombre del empleado <strong>ES OBLIGATORIO</strong></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marca">pASSWORD</label>
+                            <input type="text" formControlName="password" class="form-control" placeholder="password">
+                            <div class="text-danger" *ngIf="usuarioForm.get('password')?.hasError('required') && usuarioForm.get('password')?.touched">
+                                <span>El nombre del empleado <strong>ES OBLIGATORIO</strong></span>
                             </div>
                         </div>
                         <div class="mb-3">

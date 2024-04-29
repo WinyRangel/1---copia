@@ -26,8 +26,8 @@
                 <tr>
                   <th scope="col">Nombre</th>
                   <th scope="col">Apellidos</th>
-                  <th scope="col">Teléfono</th>
                   <th scope="col">Correo Electrónico</th>
+                  <th scope="col">Validado</th>
                   <th scope="col">Acciones</th>
                   <th scope="col">Validar</th>
                 </tr>
@@ -36,8 +36,8 @@
                 <tr *ngFor="let usuario of listUsuarios | empleadofilter: filterUsuario">
                   <td>{{usuario.nombre}}</td>
                   <td>{{usuario.apellido}}</td>
-                  <td>{{usuario.telefono}}</td>
                   <td>{{usuario.email}}</td>
+                  <td>{{usuario.validado}}</td>
                   <td>
                     <div class="btn-group">
                       <a [routerLink]="['/editar-empleado', usuario._id]" class="btn btn-success">
@@ -50,9 +50,9 @@
                   </td>
                   <td>
                     <div class="btn-group">
-                      <a class="btn btn-success">
+                      <button class="btn btn-info" (click)="validarUsuario(usuario._id)">
                         <i class="fa-solid fa-square-check"></i>
-                      </a>
+                      </button>
                     </div>
                   </td>
                 </tr>

@@ -486,7 +486,7 @@ exports.actualizarUsuario = async (req, res) => {
     console.info('actualizarUsuario');
     try {
         console.info('id: ' + req.params.id);
-        const { nombre, apellido, rfc, email, nomEmpresa, username, password, rol, resetPassword, verificationToken } = req.body;
+        const { nombre, apellido, rfc, email, nomEmpresa, username, password, rol, resetPassword, verificationToken, } = req.body;
         let usuario = await User.findById(req.params.id);
         console.info(usuario);
         if (!usuario) {
@@ -504,6 +504,7 @@ exports.actualizarUsuario = async (req, res) => {
         usuario.resetPassword = resetPassword;
         usuario.verificationToken = verificationToken;
 
+
         usuario = await User.findOneAndUpdate({ _id: req.params.id }, usuario, { new: true });
         res.json(usuario);
     } catch (error) {
@@ -511,6 +512,26 @@ exports.actualizarUsuario = async (req, res) => {
         res.status(500).send('Hubo un error');
     }
 };
+
+exports.actualizarUsuarioValidado = async (req, res) => {
+  console.info('actualizarUsuario');
+  try {
+    console.info('id: ' + req.params.id);
+    const { validado } = req.body;
+    let usuario = await User.findByIdAndUpdate(req.params.id, { validado }, { new: true });
+    console.info(usuario);
+    if (!usuario) {
+      res.status(404).json({ msg: 'No existe este usuario' });
+      return;
+    }
+    res.json(usuario);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send('Hubo un error');
+  }
+};
+
+
 
 exports.obtenerUsuario = async (req, res) => {
     console.info('obtenerUsuario');

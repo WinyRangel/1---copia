@@ -80,7 +80,6 @@ export class RegistroComponent implements OnInit {
     const USUARIO: Usuario = {
       nombre: this.usuarioForm.get('nombre')?.value,
       apellido: this.usuarioForm.get('apellido')?.value,
-      telefono: this.usuarioForm.get('telefono')?.value,
       email: this.usuarioForm.get('email')?.value,
       nomEmpresa: this.usuarioForm.get('nomEmpresa')?.value,
       rfc: this.usuarioForm.get('rfc')?.value,
@@ -93,7 +92,7 @@ export class RegistroComponent implements OnInit {
       if(this.id != null) {
         this.authService.actualizarUsuario(this.id, USUARIO).subscribe(data =>{
           this.toastr.success('Empleado actualizado con exito!');
-          this.router.navigate(['/listar-empleado'])
+          this.router.navigate(['/listar-empleados'])
           this.usuarioForm.reset();
         }, error => {
           alert(error);
@@ -113,16 +112,15 @@ export class RegistroComponent implements OnInit {
     if(this.id !== null){
       this.titulo = 'Editar Empleado';
       this.authService.getUsuario(this.id).subscribe(data => {
-        this.usuarioForm.setValue({
+        console.log("Datos del usuario:", data); 
+        this.usuarioForm.patchValue({
           nombre: data.nombre,
           apellido: data.apellido,
-          telefono: data.telefono,
           email: data.email,
           nomEmpresa: data.nomEmpresa,
           rfc: data.rfc,
           username: data.username,
           password: data.password,
-          validado: data.validado
         })
       })
     }

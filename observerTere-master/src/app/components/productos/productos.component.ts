@@ -34,6 +34,7 @@ export class ProductosComponent {
       recurso: ['', Validators.required],
       comentariosolicitud: ['', Validators.required],
       numSerie: ['', Validators.required],
+      idRecurso: ['', Validators.required],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')
   }
@@ -70,6 +71,7 @@ export class ProductosComponent {
         recurso: recurso.recurso,
         marca: recurso.marca,
         numSerie: recurso.numSerie,
+        idRecurso: recurso._id,
     });
 }
 
@@ -110,6 +112,7 @@ export class ProductosComponent {
       nomEmpresa: this.empresaNombre,
       marca: this.solicitudForm.get('marca')?.value,
       posesion: this.solicitudForm.get('posesion')?.value,
+      idRecurso: this.solicitudForm.get('idRecurso')?.value,
     }
     this._recursoService.solicitarRecurso(SOLICITUD).subscribe(
       (response) => {

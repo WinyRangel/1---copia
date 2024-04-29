@@ -111,8 +111,9 @@ exports.eliminarRecurso = async (req,res) => {
 
 exports.solicitarRecurso = async (req, res) => {
     try {
-        const { idUsuario, nombre, recurso, marca, comentariosolicitud, estado, numSerie, posesion, comentarios, nomEmpresa } = req.body;
+        const { idUsuario, nombre, recurso, marca, comentariosolicitud, estado, numSerie, posesion, comentarios, nomEmpresa, } = req.body;
 
+        
         // Crear una nueva solicitud con el estado "Pendiente"
         const nuevaSolicitud = new Solicitud({
             idUsuario,
@@ -125,6 +126,7 @@ exports.solicitarRecurso = async (req, res) => {
             posesion,
             comentarios,
             nomEmpresa,
+
         });
 
         // Guardar la solicitud en la base de datos
@@ -299,6 +301,29 @@ exports.obtenerSolicitudes = async (req, res) => {
     }
 };
 
+exports.actualizarRecursoNumSerie = async (req, res) => {
+    try {
+        const { numSerie } = req.params; // Cambio aquí
+
+        const { recurso, marca, modelo, cantidad, estatus } = req.body;
+
+        // Utilizar findOneAndUpdate para buscar y actualizar el recurso por su número de serie
+        const vrecurso = await Recurso.findOneAndUpdate(
+            { numSerie: numSerie },
+            { $set: { recurso, marca, modelo, cantidad, estatus } },
+            { new: true }
+        );
+
+        if (!vrecurso) {
+            return res.status(404).json({ msg: 'El recurso no fue encontrado' });
+        }
+
+        res.json(vrecurso);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
 
 
   /*Asignar recursos 

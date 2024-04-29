@@ -13,6 +13,7 @@ router.post('/recuperar-contrasena', authController.recuperarContrasena);
 router.post('/cambiar-contrasena', authController.cambiarContrasena);
 router.post('/verificar-token', authController.verificarToken);
 router.post('/verificar-token-correo', authController.verificarTokenCorreo);
+router.put('/validar/:id', authController.actualizarUsuarioValidado);
 
 //router.post('/reset-password/:token', authController.resetPassword);
 // Ruta para solicitar un restablecimiento de contraseña

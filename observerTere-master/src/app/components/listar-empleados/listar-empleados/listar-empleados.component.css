@@ -42,3 +42,7 @@ hr {
   max-height: 400px; /* Ajusta la altura máxima según tus necesidades */
   margin-bottom: 20px; /* Para separar el scroll del contenido siguiente */
 }
+
+.btn-info .fa-solid.fa-square-check {
+  color: white;
+}

@@ -25,6 +25,7 @@ export class AuthService {
    }
 
   urlRegistro = 'http://localhost:4000/api/users/registro/';
+  urlValidar = 'http://localhost:4000/api/users/validar';
   url = 'http://localhost:4000/api/users/';
   urlInicioSesion = 'http://localhost:4000/api/users/inicio-sesion';
   urlRecuperarContrasena = 'http://localhost:4000/api/users/recuperar-contrasena'
@@ -201,6 +202,13 @@ export class AuthService {
   actualizarUsuario(id: string, usuario: Usuario): Observable<any>{
     return this.http.put(this.url + id, usuario);
   }
+
+  actualizarUsuarioValidado(id: string): Observable<any> {
+    const validado = { validado: true };
+    return this.http.put(`${this.urlValidar}/${id}`, validado);
+  }
+  
+
 
   
 }

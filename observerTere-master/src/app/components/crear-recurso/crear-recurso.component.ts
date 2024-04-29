@@ -121,7 +121,7 @@ export class CrearRecursoComponent {
     if(this.id !== null) {
       this.titulo = 'Editar Recurso';
       this._recursoService.obtenerRecurso(this.id).subscribe(data => {
-        this.recursoForm.setValue({
+        this.recursoForm.patchValue({
           numSerie: data.numSerie,
           recurso: data.recurso,
           marca: data.marca,
