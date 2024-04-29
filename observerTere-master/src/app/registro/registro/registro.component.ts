@@ -1,10 +1,12 @@
+
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Empleado } from 'src/app/models/empleado';
+import { Usuario } from 'src/app/models/usuario';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { SessionService } from 'src/app/services/session.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-registro',
@@ -12,7 +14,7 @@ import { SessionService } from 'src/app/services/session.service';
   styleUrls: ['./registro.component.css']
 })
 export class RegistroComponent implements OnInit {
-  empleadoForm: FormGroup;
+  usuarioForm: FormGroup;
   titulo = 'Registrar empleado'
   id: string | null;
   departamentos: { nombre: string}[] = []; // Ajusta el tipo según la estructura real de tus objetos de departamento
@@ -22,18 +24,19 @@ export class RegistroComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private router: Router,
     private _empleadoService: EmpleadoService,
-    private aRouter: ActivatedRoute, private toastr: ToastrService, private sessionService: SessionService){
+    private aRouter: ActivatedRoute, private toastr: ToastrService, private sessionService: SessionService, private authService: AuthService, ){
     
-      this.empleadoForm = this.fb.group ({
-      nombre: ['', Validators.required],
-      aPaterno: ['', Validators.required],
-      aMaterno: ['', Validators.required],
-      telefono: ['', [Validators.required, Validators.pattern('[0-9]{10,12}')]],
-      email: ['', Validators.required],
-      departamento: ['', Validators.required],
-      gerente: ['', Validators.required], 
-      puesto:['', Validators.required]
-    });
+      this.usuarioForm = this.fb.group({
+        nombre: [''],
+        apellido: [''],
+        telefono: [''],
+        email: [''],
+        nomEmpresa: [''],
+        rfc: [''],
+        username: [''],
+        password: [''],
+        validado: [false]
+      });
     this.id = this.aRouter.snapshot.paramMap.get('id')
 }
 
@@ -72,36 +75,36 @@ export class RegistroComponent implements OnInit {
     );
   }
 
-  crearEmpleado(){
-    const EMPLEADO: Empleado = {
-      nombre: this.empleadoForm.get('nombre')?.value,
-      aPaterno: this.empleadoForm.get('aPaterno')?.value,
-      aMaterno: this.empleadoForm.get('aMaterno')?.value,
-      telefono: this.empleadoForm.get('telefono')?.value,
-      email: this.empleadoForm.get('email')?.value,
-      departamento: this.empleadoForm.get('departamento')?.value,
-      gerente: this.empleadoForm.get('gerente')?.value,
-      puesto: this.empleadoForm.get('puesto')?.value,
-      estado: '',
-      ciudad: '',
+  crearUsuario(){
+    const valorPorDefectoValidado = true;
+    const USUARIO: Usuario = {
+      nombre: this.usuarioForm.get('nombre')?.value,
+      apellido: this.usuarioForm.get('apellido')?.value,
+      telefono: this.usuarioForm.get('telefono')?.value,
+      email: this.usuarioForm.get('email')?.value,
+      nomEmpresa: this.usuarioForm.get('nomEmpresa')?.value,
+      rfc: this.usuarioForm.get('rfc')?.value,
+      username: this.usuarioForm.get('username')?.value,
+      password: this.usuarioForm.get('password')?.value,
+      validado: valorPorDefectoValidado,
     }
-    console.log(EMPLEADO);
+    console.log(USUARIO);
     if('Editar Empleado' === this.titulo) {
       if(this.id != null) {
-        this._empleadoService.actualizarEmpleado(this.id, EMPLEADO).subscribe(data =>{
+        this.authService.actualizarUsuario(this.id, USUARIO).subscribe(data =>{
           this.toastr.success('Empleado actualizado con exito!');
           this.router.navigate(['/listar-empleado'])
-          this.empleadoForm.reset();
+          this.usuarioForm.reset();
         }, error => {
           alert(error);
         })
       }
     } else {
-      this._empleadoService.crearEmpleado(EMPLEADO).subscribe(data =>{
+      this.authService.crearUsuario(USUARIO).subscribe(data =>{
         this.toastr.success('Empleado agregado con exito');
         this.router.navigate(['/listar-empleados'])
       }, error => {
-        this.empleadoForm.reset();
+        this.usuarioForm.reset();
         alert(error);
       })
     }
@@ -109,16 +112,17 @@ export class RegistroComponent implements OnInit {
   esEditar(){
     if(this.id !== null){
       this.titulo = 'Editar Empleado';
-      this._empleadoService.obtenerEmpleado(this.id).subscribe(data => {
-        this.empleadoForm.setValue({
+      this.authService.getUsuario(this.id).subscribe(data => {
+        this.usuarioForm.setValue({
           nombre: data.nombre,
-          aPaterno: data.aPaterno,
-          aMaterno: data.aMaterno,          
+          apellido: data.apellido,
           telefono: data.telefono,
           email: data.email,
-          departamento: data.departamento,
-          gerente: data.gerente,
-          puesto: data.puesto
+          nomEmpresa: data.nomEmpresa,
+          rfc: data.rfc,
+          username: data.username,
+          password: data.password,
+          validado: data.validado
         })
       })
     }

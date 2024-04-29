@@ -3,6 +3,9 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 
 router.post('/registro', authController.registro);
+router.get('/:id', authController.obtenerUsuario); // Ruta para obtener un usuario por su ID
+router.put('/:id', authController.actualizarUsuario); // Ruta para actualizar un usuario por su ID
+router.delete('/:id', authController.eliminarUsuario); // Ruta para eliminar un usuario por su ID
 router.get('/', authController.usuarios);
 router.get('/userEmpresa', authController.usuariosPorEmpresa);
 router.post('/inicio-sesion', authController.inicioSesion);

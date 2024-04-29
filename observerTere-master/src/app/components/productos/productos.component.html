@@ -25,7 +25,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let recurso of listRecursos" (click)="seleccionarRecurso(recurso)"  [hidden]="recurso.estado !== 'En almácen'">
+            <tr *ngFor="let recurso of listRecursos" (click)="seleccionarRecurso(recurso)"  [hidden]="recurso.estado !== 'En almacén'">
               <td>{{ recurso.numSerie }}</td>
               <td>{{ recurso.recurso }}</td>
               <td>{{ recurso.marca }}</td>
@@ -56,12 +56,8 @@
       </div>
       <div class="modal-body">
         <form [formGroup]="solicitudForm" (ngSubmit)="solicitarRecurso()">
-          <label for="empleado" class="form-label">Credencial de empleado</label>
-          <select formControlName="nombre" class="form-select" aria-label="Default select example">
-            <option selected disabled>Seleccione su credencial de empleado</option>
-            <option *ngFor="let empleado of empleados" [value]="empleado.nombre">{{ empleado.nombre }}</option>
-          </select>
-
+          <label for="empleado" class="form-label">Nombre del empleado</label>
+          <input type="text" class="form-control" name="nombre" [value]="empleadoNombre" disabled>
           <div class="mb-3">
             <label for="descripcion" class="form-label">Escribe la razón por la cual solicitas el producto</label>
             <textarea formControlName="comentario" class="form-control" id="descripcion" aria-describedby="emailHelp"></textarea>

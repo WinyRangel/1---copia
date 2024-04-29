@@ -25,17 +25,16 @@ export class SigninComponent {
   }
 
 
-
-
   signin() {
     if (this.signinForm.invalid) {
       return;
     }
-
+  
     const user = {
       password: this.signinForm.get('password')?.value,
-      username: this.signinForm.get('username')?.value    };
-
+      username: this.signinForm.get('username')?.value
+    };
+  
     this.registroService.inicioSesion(user).subscribe(
       (response) => {
         Swal.fire({
@@ -54,6 +53,7 @@ export class SigninComponent {
       }
     );
   }
+  
 
   togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;

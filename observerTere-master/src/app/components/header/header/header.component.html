@@ -36,9 +36,11 @@
           <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
             <img src="../assets/avatar.png" alt="mdo" width="25" height="25" >
           </a>
-          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1"> 
+          <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+            <li><a class="dropdown-item" ><i class="fa-regular fa-star"></i> {{ usuarioId }}</a></li> 
             <li><a class="dropdown-item" ><i class="fa-regular fa-user"></i> {{ nombre }}</a></li>
             <li><a class="dropdown-item" ><i class="fa-regular fa-star"></i> {{ rolUsuario }}</a></li>
+            <li><a class="dropdown-item" ><i class="fa-regular fa-star"></i> {{ nomEmpresa }}</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" (click)="cerrarSesion()"><i class="fa-solid fa-xmark"></i> Cerrar sesión</a></li>
           </ul>

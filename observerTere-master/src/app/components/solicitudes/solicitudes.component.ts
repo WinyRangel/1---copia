@@ -85,25 +85,6 @@ export class SolicitudesComponent {
     );
   }
   
+  
 
-
-  rechazarSolicitud(solicitud: Solicitud) {
-    this._recursoService.rechazarSolicitud(solicitud).subscribe(
-      (response) => {
-        Swal.fire({
-          icon: "success",
-          title: "Rechazada",
-          text: "Solicitud rechazada con éxito",
-        });
-      },
-      (error) => {
-        console.error(error);
-        Swal.fire({
-          icon: "question",
-          title: "Error...",
-          text: "Hubo un error en el servidor.",
-        });
-      }
-    );
-  }
   }

@@ -34,7 +34,8 @@ exports.registro = async (req, res) => {
       username,
       nomEmpresa,
       password: hashedPassword, 
-      rol: 'usuario'
+      rol: 'usuario',
+      validado: false
     });
 
     // Buscar la empresa correspondiente utilizando el nombre de la empresa proporcionado
@@ -135,10 +136,17 @@ exports.inicioSesion = async (req, res) => {
       return res.status(401).json({ mensaje: 'Credenciales inválidas' });
     }
 
+    //
+     // Verificar si el usuario está validado
+     if (!usuario.validado) {
+      return res.status(401).json({ mensaje: 'El usuario no está validado ' });
+    }
+
+
     // Obtener información de la empresa del usuario
     const empresa = await Empresa.findOne({ nomEmpresa: usuario.nomEmpresa });
 
-    const token = jwt.sign({ usuarioId: usuario._id, nombre: usuario.nombre, rol: usuario.rol }, 'secreto', { expiresIn: '120ms' });
+    const token = jwt.sign({ usuarioId: usuario._id, nombre: usuario.nombre,nomEmpresa: usuario.nomEmpresa, rol: usuario.rol, username: usuario.username  }, 'secreto', { expiresIn: '120ms' });
     // Generar un token aleatorio
     const verificationToken = jwt.sign({ usuarioId: usuario._id }, 'secreto', { expiresIn: '1h' });
 
@@ -185,9 +193,9 @@ exports.verificarTokenCorreo = async (req, res) => {
 
     //aqui
      //Generar un token JWT
-     const tokenR = jwt.sign({ usuarioId: usuario._id, nombre: usuario.nombre, rol: usuario.rol }, 'secreto', { expiresIn: '120ms' });
+     const tokenR = jwt.sign({ usuarioId: usuario._id, nombre: usuario.nombre, rol: usuario.rol, nomEmpresa: usuario.nomEmpresa }, 'secreto', { expiresIn: '120ms' });
     // Aquí puedes asignar un token de sesión al usuario y devolverlo en la respuesta
-    const tokenSesion = jwt.sign({ usuarioId: usuario._id, nombre: usuario.nombre, rol: usuario.rol }, 'secreto', { expiresIn: '1h' });
+    const tokenSesion = jwt.sign({ usuarioId: usuario._id, nombre: usuario.nombre, rol: usuario.rol, nomEmpresa: usuario.nomEmpresa, }, 'secreto', { expiresIn: '1h' });
 
 
     //res.status(200).json({ mensaje: 'Token de verificación válido' });
@@ -460,6 +468,85 @@ exports.cambiarContrasena = async (req, res) => {
     res.status(500).json({ mensaje: 'Error en el servidor' });
   }
 };
+
+//USUARIOS
+
+exports.obtenerUsuarios = async (req, res) =>{
+  console.info('obtenerUsuarios')
+  try{
+      const usuarios = await Usuario.find();
+      res.json(usuarios);
+  }catch(error){
+      console.log(error);
+      res.status(500).send('Hubo un error');
+  }
+}
+
+exports.actualizarUsuario = async (req, res) => {
+    console.info('actualizarUsuario');
+    try {
+        console.info('id: ' + req.params.id);
+        const { nombre, apellido, rfc, email, nomEmpresa, username, password, rol, resetPassword, verificationToken } = req.body;
+        let usuario = await User.findById(req.params.id);
+        console.info(usuario);
+        if (!usuario) {
+            res.status(404).json({ msg: 'No existe este usuario' });
+            return; // Añadido para evitar que el código siga ejecutándose
+        }
+        usuario.nombre = nombre;
+        usuario.apellido = apellido;
+        usuario.rfc = rfc;
+        usuario.email = email;
+        usuario.nomEmpresa = nomEmpresa;
+        usuario.username = username;
+        usuario.password = password;
+        usuario.rol = rol;
+        usuario.resetPassword = resetPassword;
+        usuario.verificationToken = verificationToken;
+
+        usuario = await User.findOneAndUpdate({ _id: req.params.id }, usuario, { new: true });
+        res.json(usuario);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};
+
+exports.obtenerUsuario = async (req, res) => {
+    console.info('obtenerUsuario');
+    console.info(req.params);
+    try {
+        let usuario = await User.findById(req.params.id);
+        if (!usuario) {
+            res.status(404).json({ msg: 'No existe este usuario' });
+            return; // Añadido para evitar que el código siga ejecutándose
+        }
+        res.json(usuario);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};
+
+exports.eliminarUsuario = async (req, res) => {
+    console.info('eliminarUsuario');
+    try {
+        let usuario = await User.findById(req.params.id);
+
+        if (!usuario) {
+            res.status(404).json({ msg: 'No existe el usuario' });
+            return; // Añadido para evitar que el código siga ejecutándose
+        }
+
+        await User.findOneAndDelete({ _id: req.params.id });
+        res.json({ msg: 'Usuario eliminado con éxito' });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+};
+
 
 
 /*authController.js

@@ -1,10 +1,13 @@
 const mongoose = require('mongoose');
 
 const SolicitudSchema = mongoose.Schema({
+    idSolicitud:{
+        type: Number,
+    },
     idRecurso:{
         type: Number,
     },
-    idEmpleado: {
+    idUsuario: {
         type: Number,
         require: true
     },
@@ -15,16 +18,33 @@ const SolicitudSchema = mongoose.Schema({
     recurso: {
         type: String,
     },
-    comentario:{
+    posesion: {
+        type: String,
+    },
+    comentariosolicitud:{
         type: String, 
         require: true
+    },
+    comentarioRechazo:{
+        type: String, 
+        require: true
+    },
+    numSerie: {
+        type: String,
+        require: true
+    },
+    nomEmpresa: {
+        type: String,
     },
     estado: {
         type: String,
         enum: ['Pendiente', 'Aprobada', 'Rechazada'], default: 'Pendiente'},
+    fechaSolicitud: {
+        type: Date,
+        default: Date.now()
+    },
     fechaEntrega: {
         type: Date,
-        default: Date.now // Para establecer la fecha de entrega como la fecha actual por defecto
     }
 });
 

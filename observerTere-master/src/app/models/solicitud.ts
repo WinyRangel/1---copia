@@ -5,15 +5,30 @@ export class Solicitud {
     numSerie: string;
     estado: string;
     fechaEntrega?:Date;
-    comentario: string;
+    fechaSolicitud?:Date;
+    comentariosolicitud: string;
+    comentarioRechazo: string;
+    nomEmpresa: string;
+    marca: string;
+    posesion: string;
+    idRecurso?: number;
+    idUsuario?: number;
 
-    constructor(nombre: string, recurso: string, comentario: string, estado: string, _id: string, fechaEntrega: Date, numSerie: string) {
+
+    constructor(nombre: string, recurso: string,  estado: string, _id: string, fechaEntrega: Date, numSerie: string, comentariosolicitud: string, comentarioRechazo: string, nomEmpresa: string, marca: string, posesion: string, idRecurso: number, idUsuario: number, fechaSolicitud:Date) {
         this.nombre = nombre;
         this.recurso = recurso;
-        this.comentario = comentario;
         this.fechaEntrega = fechaEntrega;
         this.estado = estado;
         this.numSerie = numSerie;
+        this.comentarioRechazo = comentarioRechazo;
+        this.comentariosolicitud = comentariosolicitud;
+        this.nomEmpresa = nomEmpresa;
+        this.marca = marca;
+        this.posesion = posesion;
+        this.idUsuario = idUsuario;
+        this.idRecurso = idRecurso;
+        this.fechaSolicitud = fechaSolicitud;
     }
 
 }

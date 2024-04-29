@@ -16,6 +16,8 @@ export class HeaderComponent{
 
   nombre: string = '';
   rolUsuario: string = ''; // Aquí declaramos la propiedad rolUsuario
+  nomEmpresa: string = '';
+  usuarioId: string = '';
 
 
   constructor(private authService: AuthService, private router: Router) {}
@@ -58,6 +60,8 @@ export class HeaderComponent{
       if (datosUsuario) {
         this.nombre = datosUsuario.nombre;
         this.rolUsuario = datosUsuario.rol;
+        this.usuarioId = datosUsuario.usuarioId;
+        this.nomEmpresa = datosUsuario.nomEmpresa;
       }
     }
   }

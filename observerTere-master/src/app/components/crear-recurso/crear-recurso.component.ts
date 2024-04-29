@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Recurso } from 'src/app/models/recurso';
 import { RecursoService } from 'src/app/services/recurso.service';
 import { SessionService } from 'src/app/services/session.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-crear-recurso',
@@ -19,7 +20,7 @@ export class CrearRecursoComponent {
   marcas: { nombre: string }[] = []; 
   gamas: { tipo: string }[] = []; 
 
-  constructor(private fb: FormBuilder, private sessionService: SessionService,
+  constructor(private authService: AuthService, private fb: FormBuilder, private sessionService: SessionService,
     private router: Router,
     private toastr: ToastrService,
     private _recursoService: RecursoService,
@@ -28,17 +29,25 @@ export class CrearRecursoComponent {
     this.recursoForm = this.fb.group({
       recurso: ['',Validators.required],
       marca: ['',Validators.required],
-      gama: ['',Validators.required],
+      gama: ['',],
       estatus: ['', ],
       })
       this.id = this.aRouter.snapshot.paramMap.get('id');
    }
+
+  empresaNombre: string = ''; 
 
   ngOnInit(): void {
     this.esEditar();
     this.loadMarcas();
     this.loadGama();
     this.sessionService.startSessionTimer();
+
+      // Obtener datos del usuario y asignar el nombre
+      const userData = this.authService.obtenerDatosUser();
+      if (userData) {
+        this.empresaNombre = userData.nomEmpresa;
+      }
 
   }
   loadMarcas() {
@@ -68,13 +77,18 @@ export class CrearRecursoComponent {
 
     console.log(this.recursoForm.get('numSerie')?.value);
     const valorPorDefectoEstatus = 'Sin Problemas';
-    const valorPorDefectoEstado = 'En almácen';
+    const valorPorDefectoEstado = 'En almacén';
+    const valorPorDefectoComentarios = 'Sin comentarios';
+    const valorPorDefectoPosesion = 'Empresa';
     const RECURSO: Recurso = {
       recurso: this.recursoForm.get('recurso')?.value,
       marca: this.recursoForm.get('marca')?.value,
       gama: this.recursoForm.get('gama')?.value,
       estatus: valorPorDefectoEstatus,
       estado: valorPorDefectoEstado,
+      nomEmpresa: this.empresaNombre,
+      comentarios: valorPorDefectoComentarios,
+      posesion: valorPorDefectoPosesion
     }
 
     if(this.id !== null){

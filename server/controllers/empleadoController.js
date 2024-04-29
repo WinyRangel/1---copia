@@ -1,4 +1,4 @@
-const Empleado = require('../models/Empleado');
+const Empleado = require('../models/User');
 
 exports.getEmpleadoFiltro = async (req, res) => {
     console.info('getEmpleadoFiltro')
@@ -9,14 +9,14 @@ exports.getEmpleadoFiltro = async (req, res) => {
         if(filtros.nombre) {
             mapFiltros.nombre = { $regex: filtros.nombre }
         }
-        if(filtros.aPaterno) {
-            mapFiltros.aPaterno = { $regex: filtros.aPaterno }
+        if(filtros.apellido) {
+            mapFiltros.apellido = { $regex: filtros.apellido }
         }
-        if(filtros.aMaterno) {
-            mapFiltros.aMaterno = { $regex: filtros.aMaterno }
+        if(filtros.rfc) {
+            mapFiltros.rfc = { $regex: filtros.rfc }
         }
-        if(filtros.idEmpleado) {
-            mapFiltros.idEmpleado = filtros.idEmpleado
+        if(filtros.email) {
+            mapFiltros.email = filtros.email
         }
         const retorno = await Empleado.find(mapFiltros);
         console.info(retorno)

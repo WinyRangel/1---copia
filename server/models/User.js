@@ -16,7 +16,8 @@ const userSchema = new mongoose.Schema({
     token: { type: String },
     expires: { type: Date }
   },
-  verificationToken: { type: String }
+  verificationToken: { type: String },
+  validado: { type: Boolean, required: true, default: false},
 });
 
 const User = mongoose.model('User', userSchema);

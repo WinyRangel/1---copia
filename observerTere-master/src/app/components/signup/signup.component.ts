@@ -54,7 +54,7 @@ export class SignupComponent implements OnInit {
       }
     )
   }
-
+  
   registrarUsuario() {
     this.formularioEnviado = true; // Marcar el formulario como enviado
     if (this.usuarioForm.invalid) {

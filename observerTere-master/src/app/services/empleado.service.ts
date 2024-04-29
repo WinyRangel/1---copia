@@ -17,6 +17,8 @@ export class EmpleadoService {
     return this.http.get(this.url);
   }
 
+  
+
   eliminarEmpleado(id: string): Observable<any> {
     return this.http.delete(this.url + id);
   }

@@ -1,13 +1,14 @@
 const Recurso = require("../models/Recurso.js");
 const { transporter } = require('../nodemailer.js'); // Ajusta la ruta según tu estructura de carpetas
-const Empleado = require("../models/Empleado.js"); // Ajusta la ruta según tu estructura de carpetas
+const Usuario = require("../models/User.js"); // Ajusta la ruta según tu estructura de carpetas
+//const Empleado = require("../models/Empleado.js");
 const Solicitud = require("../models/Solicitud.js"); // Ajusta la ruta según tu estructura de carpetas
 const Tipo = require("../models/Tipo.js");
 
 
 exports.crearRecurso = async (req, res) => {
     try {
-        const { recurso, marca, gama, estatus } = req.body; // Extrae los datos del cuerpo de la solicitud
+        const { recurso, marca, gama, estatus, comentarios, nomEmpresa } = req.body; // Extrae los datos del cuerpo de la solicitud
 
         // Creamos nuestro recurso con los datos proporcionados
         const vrecurso = new Recurso({
@@ -15,32 +16,38 @@ exports.crearRecurso = async (req, res) => {
             marca,
             gama,
             estatus,
-            estado: "En almácen"
+            estado: "En almacén",
+            comentarios: "Sin comentarios",
+            nomEmpresa,
+            posesion: "Empresa",
         });
-        // Enviar correo electrónico a los empleados registrados
-        const empleados = await Empleado.find(); // Ajusta el modelo y la consulta según tu estructura
 
-        for (const empleado of empleados) {
+        /*
+        // Enviar correo electrónico a los empleados registrados
+        const usuarios = await usuario.find(); // Ajusta el modelo y la consulta según tu estructura
+
+        for (const usuario of usuarios) {
             const mailOptions = {
                 from: 'danielamanzanorangel@gmail.com',
-                to: empleado.email,
+                to: usuario.email,
                 subject: 'Nuevo Artículo Agregado',
                 text: `Se ha agregado un nuevo artículo: ${vrecurso.recurso} marca: ${vrecurso.marca} gama: ${vrecurso.gama}`,
             };
 
             try {
                 await transporter.sendMail(mailOptions);
-                console.log(`Correo enviado a ${empleado.email}`);
+                console.log(`Correo enviado a ${usuario.email}`);
             } catch (error) {
-                console.log(`Error al enviar correo a ${empleado.email}: ${error}`);
+                console.log(`Error al enviar correo a ${usuario.email}: ${error}`);
                 // Puedes agregar aquí la lógica para intentar enviar el correo nuevamente o registrar el error
             }
         }
+        */
         await vrecurso.save(); // Guarda el recurso en la base de datos
         res.status(201).json(vrecurso); // Envía una respuesta con el recurso creado y el código de estado 201 (creado)
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Hubo un error');
+        console.error(error); // Registrar el error en la consola para fines de depuración
+        res.status(500).json({ error: error.message }); // Enviar el error como respuesta
     }
 };
 
@@ -104,17 +111,20 @@ exports.eliminarRecurso = async (req,res) => {
 
 exports.solicitarRecurso = async (req, res) => {
     try {
-        const { idEmpleado, nombre, recurso, marca, comentario, estado, numSerie } = req.body;
+        const { idUsuario, nombre, recurso, marca, comentariosolicitud, estado, numSerie, posesion, comentarios, nomEmpresa } = req.body;
 
         // Crear una nueva solicitud con el estado "Pendiente"
         const nuevaSolicitud = new Solicitud({
-            idEmpleado,
+            idUsuario,
             numSerie,
             nombre,
             recurso,
             marca,
-            comentario,
-            estado: "Pendiente"
+            comentariosolicitud,
+            estado: "Pendiente",
+            posesion,
+            comentarios,
+            nomEmpresa
         });
 
         // Guardar la solicitud en la base de datos
@@ -167,16 +177,16 @@ exports.obtenerSolicitudes = async (req, res) => {
         }
 
         // Obtener el empleado asociado a la solicitud
-        const empleado = await Empleado.findOne({ idEmpleado: solicitud.idEmpleado });
+        const usuario = await Usuario.findOne({ idUsuario: solicitud.idUsuario });
 
-        if (!empleado) {
+        if (!usuario) {
             return res.status(404).json({ message: 'Empleado no encontrado' });
         }
 
         // Enviar correo electrónico al empleado que solicitó el recurso
         const mailOptions = {
             from: 'actunity24@gmail.com',
-            to: empleado.email,
+            to: usuario.email,
             subject: 'Solicitud de recurso',
             text: `Hemos revisado tu solicitud, en la que solicitaste un ${solicitud.recurso}. 
             Tu recurso será entregado el día ${solicitud.fechaEntrega}.`,
@@ -184,9 +194,9 @@ exports.obtenerSolicitudes = async (req, res) => {
 
         try {
             await transporter.sendMail(mailOptions);
-            console.log(`Correo enviado a ${empleado.email}`);
+            console.log(`Correo enviado a ${usuario.email}`);
         } catch (error) {
-            console.log(`Error al enviar correo a ${empleado.email}: ${error}`);
+            console.log(`Error al enviar correo a ${usuario.email}: ${error}`);
             // Puedes agregar aquí la lógica para intentar enviar el correo nuevamente o registrar el error
         }
 

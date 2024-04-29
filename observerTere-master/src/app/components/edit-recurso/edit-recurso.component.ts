@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Recurso } from 'src/app/models/recurso';
 import { RecursoService } from 'src/app/services/recurso.service';
 import { SessionService } from 'src/app/services/session.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-edit-recurso',
@@ -16,7 +17,7 @@ export class EditRecursoComponent {
   titulo = 'Crear recurso';
   id: string | null;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: FormBuilder,private authService: AuthService,
     private router: Router,
     private toastr: ToastrService,
     private _recursoService: RecursoService,
@@ -32,9 +33,17 @@ export class EditRecursoComponent {
       this.id = this.aRouter.snapshot.paramMap.get('id');
    }
 
+   empresaNombre: string = ''; 
+
   ngOnInit(): void {
     this.esEditar();
     this.sessionService.startSessionTimer();
+
+    // Obtener datos del usuario y asignar el nombre
+    const userData = this.authService.obtenerDatosUser();
+    if (userData) {
+      this.empresaNombre = userData.nomEmpresa;
+    }
 
   }
 
@@ -43,7 +52,9 @@ export class EditRecursoComponent {
 
     console.log(this.recursoForm.get('numSerie')?.value);
     const valorPorDefectoEstatus = 'Sin Problemas';
-    const valorPorDefectoEstado = 'En almácen';
+    const valorPorDefectoEstado = 'En almacén';
+    const valorPorDefectoComentarios = 'Sin comentarios';
+    const valorPorDefectoPosesion = 'Empresa';
     const RECURSO: Recurso = {
       numSerie: this.recursoForm.get('numSerie')?.value,
       recurso: this.recursoForm.get('recurso')?.value,
@@ -51,6 +62,9 @@ export class EditRecursoComponent {
       gama: this.recursoForm.get('gama')?.value,
       estatus: valorPorDefectoEstatus,
       estado: valorPorDefectoEstado,
+      nomEmpresa: this.empresaNombre,
+      comentarios: valorPorDefectoComentarios,
+      posesion: valorPorDefectoPosesion
     }
 
     if(this.id !== null){

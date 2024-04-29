@@ -7,15 +7,13 @@ function generarNumSerie() {
 const RecursoSchema = mongoose.Schema({
     idEmpresa: {
         type: String,
-        required: true
     },
     numSerie: {
         type: String,
         default: generarNumSerie,
     },
-    idRecurso:{
+    idUsuario:{
         type: String,
-        required: true
     },
     recurso: {
         type: String,
@@ -38,6 +36,17 @@ const RecursoSchema = mongoose.Schema({
         type: String,
         enum: ['En almacén', 'Asignado'],
         default: 'En almacén'
+    },
+    comentarios: {
+        type: String,
+        default: 'Sin comentarios'
+    },
+    nomEmpresa: {
+        type: String,
+    },
+    posesion: {
+        type: String,
+        default: 'Empresa'
     }
 });
 

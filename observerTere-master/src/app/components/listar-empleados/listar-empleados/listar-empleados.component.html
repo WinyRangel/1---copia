@@ -17,7 +17,7 @@
           <div class="d-flex justify-content-end mb-3">
             <button class="btn btn-success me-2" routerLink="/registro"><i class="fa-solid fa-plus"></i> NUEVO</button>
             <div class="form-group mb-0">
-              <input type="text" class="form-control" name="filterEmpleado" placeholder="Buscar Empleado" [(ngModel)]="filterEmpleado" >
+              <input type="text" class="form-control" name="filterUsuario" placeholder="Buscar Empleado" >
             </div>
           </div>
           <div class="table-responsive"> <!-- Added class to make table responsive -->
@@ -28,32 +28,38 @@
                   <th scope="col">Apellidos</th>
                   <th scope="col">Teléfono</th>
                   <th scope="col">Correo Electrónico</th>
-                  <th scope="col">Departamento</th>
                   <th scope="col">Acciones</th>
+                  <th scope="col">Validar</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let empleado of listEmpleados | empleadofilter: filterEmpleado">
-                  <td>{{empleado.nombre}}</td>
-                  <td>{{empleado.aPaterno}} {{empleado.aMaterno}}</td>
-                  <td>{{empleado.telefono}}</td>
-                  <td>{{empleado.email}}</td>
-                  <td>{{empleado.departamento}}</td>
+                <tr *ngFor="let usuario of listUsuarios | empleadofilter: filterUsuario">
+                  <td>{{usuario.nombre}}</td>
+                  <td>{{usuario.apellido}}</td>
+                  <td>{{usuario.telefono}}</td>
+                  <td>{{usuario.email}}</td>
                   <td>
                     <div class="btn-group">
-                      <a [routerLink]="['/editar-empleado', empleado._id]" class="btn btn-success">
+                      <a [routerLink]="['/editar-empleado', usuario._id]" class="btn btn-success">
                         <i class="fa-solid fa-pen-to-square"></i>
                       </a>
-                      <button (click)="eliminarEmpleado(empleado._id)" class="btn btn-danger">
+                      <button (click)="eliminarUsuario(usuario._id)" class="btn btn-danger">
                         <i class="fa-solid fa-trash"></i>
                       </button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="btn-group">
+                      <a class="btn btn-success">
+                        <i class="fa-solid fa-square-check"></i>
+                      </a>
                     </div>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <h5 style="text-align: start; margin-top: 10px;" *ngIf="listEmpleados.length == 0"> No hay empleados para mostrar</h5>
+          <h5 style="text-align: start; margin-top: 10px;" *ngIf="listUsuarios.length == 0"> No hay empleados para mostrar</h5>
         </div>
       </div>
     </div>

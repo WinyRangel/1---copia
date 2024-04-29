@@ -33,8 +33,9 @@
                       <tr>
                           <th scope="col">Empleado</th>
                           <th scope="col">Articulo solicitado</th>
-                          <th scope="col">Número de serie</th>
+                          <th scope="col">Numero de Serie</th>
                           <th scope="col">Comentarios</th>
+                          <th scope="col">Fecha de Solicitud</th>
                           <th scope="col">Fecha de entrega</th>
                           <th scope="col">Acciones</th>
                       </tr>
@@ -45,7 +46,8 @@
                               <td>{{ solicitud.nombre }}</td>
                               <td>{{ solicitud.recurso }}</td>
                               <td>{{ solicitud.numSerie }}</td>
-                              <td>{{ solicitud.comentario }}</td>
+                              <td>{{ solicitud.comentariosolicitud }}</td>
+                              <td>{{ solicitud.fechaSolicitud }}</td>
                               <td>
                                   <!-- Vincula el input de fecha con la propiedad fechaEntrega de la solicitud -->
                                   <input type="date" id="fechaEntrega_{{ solicitud._id }}" name="fechaEntrega" [(ngModel)]="solicitud.fechaEntrega" (change)="actualizarFechaEntrega(solicitud)" />
@@ -56,9 +58,29 @@
                                       <button class="btn btn-success" (click)="aprobarSolicitud(solicitud)">
                                           <i class="fa-solid fa-check"></i>
                                       </button>
+                                      <!-- Botón de rechazo en la tabla -->
+                                      <!-- Ejemplo de cómo abrir el modal para editar el comentario de rechazo -->
+                                      <!-- Ejemplo de cómo abrir el modal para editar el comentario de rechazo -->
+                                    <!-- Dentro de tu archivo solicitudes.component.html 
+                                      <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalComentarioRechazo" (click)="openModalRechazo(solicitud)">
+                                        <i class="fa-solid fa-times"></i>
+                                      </button>
+-->
+
+
+                                      
+                                    
+                                      
+                                    
+                                    
+                                      <!--
+                                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalComentarioRechazo" >
+                                        <i class="fa-solid fa-times"></i>
+                                      </button>
                                       <button class="btn btn-danger" (click)="rechazarSolicitud(solicitud)">
                                           <i class="fa-solid fa-times"></i>
                                       </button>
+                                      -->
                                   </div>
                               </td>
                           </ng-container>
@@ -76,9 +98,11 @@
               <thead>
                 <tr>
                   <th scope="col">Empleado</th>
-                  <th scope="col">Articulo solicitado</th>
-                  <th scope="col">Fecha de entrega</th>
+                  <th scope="col">Articulo Solicitado</th>
+                  <th scope="col">Numero de Serie</th>
                   <th scope="col">Comentarios</th>
+                  <th scope="col">Fecha de Solicitud</th>
+                  <th scope="col">Fecha de entrega</th>
                 </tr>
               </thead>
               <tbody>
@@ -86,8 +110,10 @@
                   <ng-container *ngIf="(solicitud.estado == 'Aprobada')">
                   <td>{{ solicitud.nombre }}</td>
                   <td>{{ solicitud.recurso }}</td>
+                  <td>{{ solicitud.numSerie }}</td>
+                  <td>{{ solicitud.comentariosolicitud }}</td>
+                  <td>{{ solicitud.fechaSolicitud }}</td>
                   <td>{{ solicitud.fechaEntrega }}</td>
-                  <td>{{ solicitud.comentario }}</td>
                 </ng-container>
                 </tr>
               </tbody>
@@ -104,7 +130,9 @@
               <tr>
                 <th scope="col">Empleado</th>
                 <th scope="col">Articulo solicitado</th>
+                <th scope="col">Numero de Serie</th>
                 <th scope="col">Comentarios</th>
+                <th scope="col">Fecha de Solicitud</th>
               </tr>
             </thead>
             <tbody>
@@ -112,7 +140,9 @@
                 <ng-container *ngIf="(solicitud.estado == 'Rechazada')">
                 <td>{{ solicitud.nombre }}</td>
                 <td>{{ solicitud.recurso }}</td>
-                <td>{{ solicitud.comentario }}</td>
+                <td>{{ solicitud.numSerie }}</td>
+                <td>{{ solicitud.comentarioRechazo }}</td>
+                <td>{{ solicitud.fechaSolicitud }}</td>
               </ng-container>
               </tr>
             </tbody>
@@ -128,6 +158,35 @@
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<!-- Modal -->
+<!-- Modal 
+<div class="modal fade" id="modalComentarioRechazo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="modalAbierto">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Editar Comentario de Rechazo</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="comentarioRechazoForm" (ngSubmit)="guardarComentarioRechazo()">
+          <div class="mb-3">
+            <label for="comentarioRechazo" class="form-label">Comentario de Rechazo</label>
+            <textarea class="form-control" id="comentarioRechazo" formControlName="comentarioRechazo" rows="3"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary">Enviar Comentario</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+-->
+
+
+
+
+
 <script>
   function showContent(id) {
     const contents = document.getElementsByClassName("content");
