@@ -6,6 +6,7 @@ import { Proveedor } from 'src/app/models/proveedor';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { ProveedorService } from 'src/app/services/proveedor.service';
 import { SessionService } from 'src/app/services/session.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-registrar-proveedor',
@@ -25,7 +26,7 @@ export class RegistrarProveedorComponent implements OnInit{
   constructor(private fb: FormBuilder,
     private router: Router,
     private _proveedorService: ProveedorService,
-    private aRouter: ActivatedRoute, private toastr: ToastrService, private sessionService: SessionService){
+    private aRouter: ActivatedRoute, private toastr: ToastrService, private sessionService: SessionService, private authService: AuthService,){
     
       this.proveedorForm = this.fb.group ({
       nombre: ['', Validators.required],
@@ -34,15 +35,23 @@ export class RegistrarProveedorComponent implements OnInit{
       telefono: ['', [Validators.required, Validators.pattern('[0-9]{10,12}')]],
       email: ['', Validators.required],
       productos: ['', Validators.required],
+      nomEmpresa: ['',],
     });
     this.id = this.aRouter.snapshot.paramMap.get('id')
 }
 
-
+empresaNombre: string = ''; 
 
   ngOnInit(): void {
     this.esEditar();
     this.sessionService.startSessionTimer();
+
+    
+     // Obtener datos del usuario y asignar el nombre
+     const userData = this.authService.obtenerDatosUser();
+     if (userData) {
+       this.empresaNombre = userData.nomEmpresa;
+     }
 
   }
 
@@ -56,6 +65,7 @@ export class RegistrarProveedorComponent implements OnInit{
       telefono: this.proveedorForm.get('telefono')?.value,
       email: this.proveedorForm.get('email')?.value,
       productos: this.proveedorForm.get('productos')?.value,
+      nomEmpresa: this.empresaNombre,
     }
     console.log(PROVEEDOR);
     if('Editar proveedor' === this.titulo) {
@@ -90,6 +100,7 @@ export class RegistrarProveedorComponent implements OnInit{
       })
     }
   }
+  
   agregarProducto() {
     if (this.productosContainer) {
       const input = document.createElement('input');

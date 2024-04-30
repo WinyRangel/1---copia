@@ -36,14 +36,17 @@ export class SolicitudesComponent {
         this.mostrarPendientes = true;
         this.mostrarAprobadas = false;
         this.mostrarRechazadas = false;
+        this.obtenerSolicitudes();
     } else if (opcion === 'Aprobadas') {
         this.mostrarPendientes = false;
         this.mostrarAprobadas = true;
         this.mostrarRechazadas = false;
+        this.obtenerSolicitudes();
     } else if (opcion === 'Rechazadas') {
         this.mostrarPendientes = false;
         this.mostrarAprobadas = false;
         this.mostrarRechazadas = true;
+        this.obtenerSolicitudes();
     }
 }
 
@@ -163,6 +166,8 @@ export class SolicitudesComponent {
               console.error('Error al actualizar el campo de posesión del recurso:', error);
           }
         );
+
+        this.obtenerSolicitudes();
       },
       (error) => {
         console.error(error);
@@ -204,6 +209,7 @@ export class SolicitudesComponent {
                 text: "Solicitud rechazada con éxito",
               });
               // Aquí podrías actualizar la lista de solicitudes u otras acciones necesarias después de rechazar la solicitud
+              this.obtenerSolicitudes();
             },
             (error) => {
               console.error(error);
@@ -238,6 +244,7 @@ export class SolicitudesComponent {
     } else {
       console.error('El ID de la solicitud es inválido');
     }
+    this.obtenerSolicitudes();
   }
   
   

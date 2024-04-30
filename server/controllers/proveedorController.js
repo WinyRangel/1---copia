@@ -4,19 +4,27 @@ const Producto = require ("../models/Producto")
 
 
 exports.crearProveedor = async (req, res) => {
-    console.info('crear Proveedor')
-    try{
-        let proveedor;
-        //crear proveedor
-        proveedor = new Proveedor(req.body);
+    console.info('crear Proveedor');
+    try {
+        const {  nombre, direccion, email, telefono, categoria,  nomEmpresa } = req.body; // Extrae los datos del cuerpo de la solicitud
 
-        await proveedor.save();
-        res.send(proveedor);
+        // Creamos nuestro proveedor con los datos proporcionados
+        const proveedor = new Proveedor({
+            nombre,
+            direccion,
+            email,
+            telefono,
+            categoria,
+            nomEmpresa
+        });
+
+        await proveedor.save(); // Guarda el proveedor en la base de datos
+        res.status(201).json(proveedor); // Envía una respuesta con el proveedor creado y el código de estado 201 (creado)
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Hubo un error');
+        console.error(error); // Registrar el error en la consola para fines de depuración
+        res.status(500).json({ error: error.message }); // Enviar el error como respuesta
     }
-}
+};
 
 exports.agregarProducto = async (req, res) => {
     const proveedorId = req.params.id; // Suponiendo que el id del proveedor se pasa como parámetro en la URL
