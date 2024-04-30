@@ -29,6 +29,7 @@ import { ConocenosComponent } from './components/conocenos/conocenos.component';
 import { InicioUsuarioComponent } from './components/inicio-usuario/inicio-usuario.component';
 import { AgregarRecursoComponent } from './components/agregar-recurso/agregar-recurso.component';
 import { EmpresaComponent } from './components/empresa/empresa.component';
+import { AdquiridosComponent } from './components/adquiridos/adquiridos.component';
 
 
 const routes: Routes = [
@@ -64,6 +65,7 @@ const routes: Routes = [
   {path: 'registrar-empresa', component: EmpresaComponent, data: { breadcrumb: 'Preguntas Frecuentes'}},
   {path: 'verificar-token', component: VerificarTokenComponent, data: { breadcrumb: 'Verificar Token'}},
   {path: 'listar-usuarios', component: ListarUsuariosComponent, data: { breadcrumb: 'Verificar Token'}},
+  { path: 'adquiridos', component: AdquiridosComponent,  canActivate: [AuthGuard], data: { breadcrumb: 'Adquiridos'}},
   { path: '**', redirectTo: 'error404'}
 ];
 

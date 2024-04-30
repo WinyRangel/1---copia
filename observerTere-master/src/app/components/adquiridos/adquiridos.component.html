@@ -1,0 +1,114 @@
+<nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="/unity">Inicio</a></li>
+      <li class="breadcrumb-item active" aria-current="page">Adquiridos</li>
+    </ol>
+  </nav>
+  <div class="container">
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <input type="text" class="form-control" name="filterPost" placeholder="Buscar..." [(ngModel)]="filterPost">
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-striped mt-3">
+            <thead>
+              <tr> 
+                <th scope="col">Numero de serie</th>
+                <th scope="col">Articulo</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Ubicación</th>
+                <th scope="col">Regresar Articulo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let recurso of listRecursos" [hidden]="recurso.estado !== 'Asignado'">
+                <td>{{ recurso.numSerie }}</td>
+                <td>{{ recurso.recurso }}</td>
+                <td>{{ recurso.marca }}</td>
+                <td>{{ recurso.estado }}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" (click)="setSelectedResourceId(recurso._id)" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        <i class="fa-solid fa-list-check"></i>
+                      </button>                                         
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="alert alert-secondary" role="alert">
+          Los recusos que sean aprobados, aparecen en esta seccion
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">Regresar articulo</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form  [formGroup]="solicitudForm" (ngSubmit)="agregarRecurso()">
+
+                       <!-- Para la variable 'marca' -->
+<div class="mb-3" hidden>
+    <label for="marca" class="form-label">Recurso</label>
+    <input formControlName="recurso" type="text" class="form-control" id="marca">
+</div>
+           <!-- Para la variable 'marca' -->
+<div class="mb-3" hidden>
+    <label for="marca" class="form-label">Marca del producto</label>
+    <input formControlName="marca" type="text" class="form-control" id="marca">
+</div>
+
+<!-- Para la variable 'gama' -->
+<div class="mb-3" hidden>
+    <label for="gama" class="form-label">Gama del producto</label>
+    <input formControlName="gama" type="text" class="form-control" id="gama">
+</div>
+
+<!-- Para la variable 'estatus' -->
+<div class="mb-3" hidden>
+    <label for="estatus" class="form-label">Estatus del producto</label>
+    <input formControlName="estatus" type="text" class="form-control" id="estatus" value="En almacén">
+</div>
+
+<!-- Para la variable 'estado' -->
+<div class="mb-3" hidden>
+    <label for="estado" class="form-label">Estado del producto</label>
+    <input formControlName="estado" type="text" class="form-control" id="estado">
+</div>
+
+<!-- Para la variable 'nomEmpresa' -->
+<div class="mb-3" hidden>
+    <label for="nomEmpresa" class="form-label">Nombre de la empresa</label>
+    <input formControlName="nomEmpresa" type="text" class="form-control" id="nomEmpresa">
+</div>
+
+<!-- Para la variable 'comentarios' (ya proporcionada) -->
+<div class="mb-3">
+    <label for="descripcion" class="form-label">Escribe un comentario sobre el estado del producto</label>
+    <textarea formControlName="comentarios" class="form-control" id="descripcion" aria-describedby="emailHelp"></textarea>
+</div>
+
+<!-- Para la variable 'posesion' -->
+<div class="mb-3" hidden>
+    <label for="posesion" class="form-label">Estado de posesión del producto</label>
+    <input formControlName="posesion" type="text" class="form-control" id="posesion" value="Empresa">
+</div>
+
+  
+            <button type="submit" class="btn btn-success me-2">Regresar Producto</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+          </form>
+        </div>
+        <div class="modal-footer"></div>
+      </div>
+    </div>
+  </div>
+  

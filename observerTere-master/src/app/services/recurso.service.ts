@@ -80,6 +80,10 @@ export class RecursoService {
   
   
   editarRecursoNumSerie(numSerie: string, vrecurso: Recurso): Observable<any> {
-    return this.http.put(`${this.url}numserie/${numSerie}`, vrecurso);
+    return this.http.put(`${this.url}numserie1/${numSerie}`, vrecurso);
   }
+
+  editarPosesionRecurso(numSerie: string, posesion: string): Observable<any> {
+    return this.http.put(`${this.url}numserie/${numSerie}`, { posesion });
+}
 }

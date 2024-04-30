@@ -65,10 +65,26 @@ exports.obtenerRecursos = async (req, res) => {
 
 }
 
+exports.obtenerRecurso = async (req, res) => {
+    const recursoId = req.params.id; // Suponiendo que el ID esté en los parámetros de la solicitud
+
+    try {
+        const recurso = await Recurso.findById(recursoId);
+        if (!recurso) {
+            return res.status(404).json({ mensaje: 'Recurso no encontrado' });
+        }
+        res.json(recurso);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error al buscar el recurso');
+    }
+}
+
+
 exports.actualizarRecurso = async (req, res) => {
 
     try {
-        const { numSerie, recurso, marca, modelo, cantidad, estatus } = req.body;
+        const { numSerie, recurso, marca, modelo, cantidad, estatus, gama, estado, nomEmpresa, comentarios, posesion,} = req.body;
         let vrecurso = await Recurso.findById(req.params.id);
 
         if(!vrecurso) {
@@ -80,7 +96,38 @@ exports.actualizarRecurso = async (req, res) => {
         vrecurso.marca = marca;
         vrecurso.modelo = modelo;
         vrecurso.estatus = estatus;
+        vrecurso.comentarios = comentarios;
+        vrecurso.posesion = posesion;
+        vrecurso.estado = estado
         
+        vrecurso = await Recurso.findOneAndUpdate({ _id: req.params.id },vrecurso, { new: true} )
+        res.json(vrecurso);
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+
+exports.actualizarRecursoPosesion = async (req, res) => {
+
+    try {
+        const { recurso, marca, modelo, cantidad, estatus, gama, estado, nomEmpresa, comentarios, posesion} = req.body;
+        let vrecurso = await Recurso.findById(req.params.id);
+
+        if(!vrecurso) {
+            res.status(404).json({ msg: 'No existe' })
+        }
+
+        vrecurso.recurso = recurso;
+        vrecurso.marca = marca;
+        vrecurso.gama = gama;
+        vrecurso.modelo = modelo;
+        vrecurso.estatus = estatus;
+        vrecurso.comentarios = comentarios;
+        vrecurso.posesion = posesion;
+
         vrecurso = await Recurso.findOneAndUpdate({ _id: req.params.id },vrecurso, { new: true} )
         res.json(vrecurso);
 
@@ -311,6 +358,29 @@ exports.actualizarRecursoNumSerie = async (req, res) => {
         const vrecurso = await Recurso.findOneAndUpdate(
             { numSerie: numSerie },
             { $set: { recurso, marca, modelo, cantidad, estatus } },
+            { new: true }
+        );
+
+        if (!vrecurso) {
+            return res.status(404).json({ msg: 'El recurso no fue encontrado' });
+        }
+
+        res.json(vrecurso);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Hubo un error');
+    }
+}
+
+exports.actualizarPosesionRecurso = async (req, res) => {
+    try {
+        const { numSerie } = req.params; // Cambio aquí
+        const { posesion } = req.body; // Nueva propiedad a actualizar
+
+        // Utilizar findOneAndUpdate para buscar y actualizar la posesión del recurso por su número de serie
+        const vrecurso = await Recurso.findOneAndUpdate(
+            { numSerie: numSerie },
+            { $set: { posesion } },
             { new: true }
         );
 

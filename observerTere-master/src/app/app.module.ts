@@ -53,6 +53,7 @@ import { InicioUsuarioComponent } from './components/inicio-usuario/inicio-usuar
 import { AgregarRecursoComponent } from './components/agregar-recurso/agregar-recurso.component';
 import { EmpresaComponent } from './components/empresa/empresa.component';
 import { ListarUsuariosComponent } from './components/listar-usuarios/listar-usuarios.component';
+import { AdquiridosComponent } from './components/adquiridos/adquiridos.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -92,7 +93,8 @@ import { ListarUsuariosComponent } from './components/listar-usuarios/listar-usu
     InicioUsuarioComponent,
     AgregarRecursoComponent,
     EmpresaComponent,
-    ListarUsuariosComponent  ],
+    ListarUsuariosComponent,
+    AdquiridosComponent  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

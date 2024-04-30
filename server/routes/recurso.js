@@ -22,7 +22,8 @@ router.put('/:id/rechazar', recursoController.rechazarSolicitud)
 router.post('/tipo', recursoController.crearTipo)
 router.get('/tipo', recursoController.obtenerTipo)
 router.put('/editar/:id', recursoController.editarSolicitud);
-router.put('/numserie/:numSerie', recursoController.actualizarRecursoNumSerie);
+router.put('/numserie/:numSerie', recursoController.actualizarPosesionRecurso);
+router.get('/:id', recursoController.obtenerRecurso);
 
 
 

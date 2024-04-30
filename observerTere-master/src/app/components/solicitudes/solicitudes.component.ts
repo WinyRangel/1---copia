@@ -70,10 +70,19 @@ export class SolicitudesComponent {
       this.id = this.aRouter.snapshot.paramMap.get('id');
    }
 
+   nombrePosesion: string = ''; 
+
   ngOnInit(): void {
     this.obtenerSolicitudes();
     this.mostrarDiv('Pendientes');
     this.sessionService.startSessionTimer();
+
+    // Obtener datos del usuario y asignar el nombre
+    const userData = this.authService.obtenerDatosUser();
+    if (userData) {
+      this.nombrePosesion = userData.nombre;
+    }
+
 
   }
 
@@ -130,13 +139,30 @@ export class SolicitudesComponent {
 
   // Función para aprobar una solicitud
   aprobarSolicitud(solicitud: Solicitud) {
+    console.log('Aprobando solicitud:', solicitud);
     this._recursoService.aprobarSolicitud(solicitud).subscribe(
       (response) => {
+        console.log('Solicitud aprobada con éxito:', response);
         Swal.fire({
           icon: "success",
           title: "Aprobada",
           text: "Solicitud aprobada con éxito",
         });
+
+        // Obtener el número de serie del recurso asociado a la solicitud aprobada
+        const numSerie = solicitud.numSerie;
+        console.log('Número de serie del recurso:', numSerie);
+        console.log('posiscion:', this.nombrePosesion);
+
+        // Actualizar el campo de posesión del recurso en la base de datos
+        this._recursoService.editarPosesionRecurso(numSerie, this.nombrePosesion).subscribe(
+          (response) => {
+            console.log('Campo de posesión del recurso actualizado con éxito:', response);
+          },
+          (error) => {
+              console.error('Error al actualizar el campo de posesión del recurso:', error);
+          }
+        );
       },
       (error) => {
         console.error(error);
